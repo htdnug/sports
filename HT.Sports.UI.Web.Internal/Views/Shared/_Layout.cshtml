@@ -10,11 +10,13 @@
     <title>@ViewData["Title"] - @ViewBag.AppTitle</title>
 
     <environment include="Development">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
         <link rel="stylesheet" href="~/lib/twitter-bootstrap/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
     </environment>
     <link rel="stylesheet" href="">
     <environment exclude="Development">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.0/css/bootstrap.min.css"
               asp-fallback-href="~/lib/twitter-bootstrap/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute"
@@ -78,3 +80,4 @@
 
     @RenderSection("Scripts", required: false)
 </body>
+</html>
