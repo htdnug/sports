@@ -14,6 +14,7 @@
     <Folder Include="Pages\Components\" />
     <Folder Include="Pages\Shared\" />
     <Folder Include="Views\Shared\Components\" />
+    <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
 </Project>
