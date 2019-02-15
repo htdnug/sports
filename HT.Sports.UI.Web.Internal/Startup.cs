@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HT.Sports.Data.EF;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace HT.Sports.UI.Web.Internal
@@ -15,12 +17,13 @@ namespace HT.Sports.UI.Web.Internal
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddDbContext<SportsContext>(options => options.UseInMemoryDatabase(databaseName: "InMemorySportsDatabase"));
             ServicesHelper.Instance.RegisterServices(services);
             services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, SportsContext context)
         {
             if (env.IsDevelopment())
             {
@@ -29,6 +32,10 @@ namespace HT.Sports.UI.Web.Internal
                 //   Use the Database Error Page to report database runtime errors.
                 app.UseDeveloperExceptionPage();
                 app.UseDatabaseErrorPage();
+
+                // Seed data for In Memory EF Context
+                //   REMOVE SportsContext from Configure() parameter list when done w/ In Memory
+                InMemoryDataSeeder.Instance.Seed(context);
             }
             else
             {

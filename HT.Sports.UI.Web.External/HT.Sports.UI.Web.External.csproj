@@ -11,11 +11,15 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\" />
     <Folder Include="Pages\Components\" />
     <Folder Include="Pages\Shared\" />
-    <Folder Include="Views\Shared\Components\" />
+    <Folder Include="ViewModels\Views\" />
+    <Folder Include="ViewModels\Pages\" />
     <Folder Include="wwwroot\images\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\HT.Sports\HT.Sports.csproj" />
   </ItemGroup>
 
 </Project>
