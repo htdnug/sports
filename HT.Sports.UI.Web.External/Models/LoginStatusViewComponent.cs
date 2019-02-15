@@ -1,26 +1,25 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
-using HT.Sports.Data.EF;
+using HT.Sports.Data;
 using HT.Sports.UI.Web.External.ViewModels.Components;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace HT.Sports.UI.Web.External.Models
 {
     [ViewComponent]
     public class LoginStatusViewComponent : ViewComponent
     {
-        private readonly SportsContext context;
+        private readonly IUserProfileRepo userProfileRepo;
 
-        public LoginStatusViewComponent(SportsContext sportsContext)
+        public LoginStatusViewComponent(IUserProfileRepo userProfileRepository)
         {
-            this.context = sportsContext;
+            this.userProfileRepo = userProfileRepository;
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var users = await this.context.UserProfiles.ToListAsync();
+            var users = await this.userProfileRepo.GetAllAsync();
             var vm = new LoginStatusViewModel
             {
                 UserProfiles = users.Select(x => new UserProfileViewModel { Id = x.Id, DisplayName = x.DisplayName })

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using HT.Sports.Entities;
 
 namespace HT.Sports.UI.Web.External.ViewModels.Components
 {
