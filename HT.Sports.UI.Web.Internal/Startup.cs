@@ -15,6 +15,7 @@ namespace HT.Sports.UI.Web.Internal
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            ServicesHelper.Instance.RegisterServices(services);
             services.AddMvc();
         }
 
