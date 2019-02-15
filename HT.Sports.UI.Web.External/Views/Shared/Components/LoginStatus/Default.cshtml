@@ -1,0 +1,23 @@
+﻿@model HT.Sports.UI.Web.External.ViewModels.Components.LoginStatusViewModel
+
+<ul class="nav navbar-nav navbar-right">
+    @if (Model.IsLoggedIn)
+    {
+        <li class="navbar-text">@Model.CurrentUser.DisplayName</li>
+        <li class="nav-item"><a class="nav-link" asp-controller="Account" asp-action="Logout">Sign out</a></li>
+    }
+    else
+    {
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Login As
+            </a>
+            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                @foreach (var item in Model.UserProfiles)
+                {
+                    <a class="dropdown-item" asp-controller="Account" asp-action="Login" asp-route-id="@item.Id">@item.DisplayName</a>
+                }
+            </div>
+        </li>
+    }
+</ul>
