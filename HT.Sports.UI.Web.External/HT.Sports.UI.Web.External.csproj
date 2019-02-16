@@ -19,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\HT.Sports.UI.Web\HT.Sports.UI.Web.csproj" />
     <ProjectReference Include="..\HT.Sports\HT.Sports.csproj" />
   </ItemGroup>
 

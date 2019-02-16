@@ -8,7 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace HT.Sports.UI.Web.External.Models
 {
     [ViewComponent]
-    public class LoginStatusViewComponent : ViewComponent
+    public class LoginStatusViewComponent : SportsViewComponent
     {
         private readonly IUserProfileRepo userProfileRepo;
 

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HT.Sports.UI.Web.External.Controllers
 {
-    public class AccountController : Controller
+    public class AccountController : SportsController
     {
         public IActionResult Login(int? id)
         {

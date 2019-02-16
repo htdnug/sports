@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace HT.Sports.UI.Web.Internal.Controllers
 {
-    public class TestController : Controller
+    public class TestController : SportsController
     {
         public IActionResult Index()
         {
