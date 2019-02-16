@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace HT.Sports.UI.Web.External.Pages
 {
-    public class TestModel : PageModel
+    public class TestModel : SportsPageModel
     {
         public void OnGet()
         {
