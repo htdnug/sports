@@ -15,10 +15,12 @@ namespace HT.Sports.Data.EF
         {
         }
 
+        public DbSet<Trip> Trips { get; set; }
         public DbSet<UserProfile> UserProfiles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.ApplyConfiguration(new TripMap());
             modelBuilder.ApplyConfiguration(new UserProfileMap());
             // may use this method at a later date
             //var assembly = typeof(SportsContext).Assembly;

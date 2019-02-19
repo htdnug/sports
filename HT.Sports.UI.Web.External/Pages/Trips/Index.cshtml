@@ -1,0 +1,33 @@
+﻿@page
+@model HT.Sports.UI.Web.External.Pages.Trips.IndexModel
+
+@{
+    ViewBag.Title = "Trips";
+}
+
+<h2>@ViewBag.Title</h2>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Date</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Trips) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateOccurred)
+            </td>
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
+                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
