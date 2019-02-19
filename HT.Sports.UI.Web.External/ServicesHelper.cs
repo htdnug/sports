@@ -37,6 +37,7 @@ namespace HT.Sports.UI.Web.External
         public void RegisterServices(IServiceCollection services)
         {
             // setup custom services here
+            services.AddScoped<ITripRepo, TripRepo>();
             services.AddScoped<IUserProfileRepo, UserProfileRepo>();
         }
     }
