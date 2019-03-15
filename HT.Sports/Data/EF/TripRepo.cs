@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HT.Sports.Data.EF.Operations;
 using HT.Sports.Entities;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,19 +23,8 @@ namespace HT.Sports.Data.EF
 
         public async Task<int> DeleteAsync(int id)
         {
-            if (id == 0)
-            {
-                return 0;
-            }
-
-            var dbTrip = await this.GetByIdAsync(id);
-            if (dbTrip == null)
-            {
-                return 0;
-            }
-
-            this.Table.Remove(dbTrip);
-            return await this.Db.SaveChangesAsync();
+            var operation = new DeleteAsyncOperation<TripRepo, Trip>(this);
+            return await operation.DeleteAsync(id);
         }
 
         public async Task<bool> DuplicateExistsAsync(Trip trip)

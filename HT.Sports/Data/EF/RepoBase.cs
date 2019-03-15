@@ -3,16 +3,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HT.Sports.Data.EF
 {
-    public abstract class RepoBase<T> where T : EntityBase
+    public abstract class RepoBase<TEntity> where TEntity : EntityBase
     {
-        protected readonly SportsContext Db;
+        protected readonly DbContext Db;
         
-        public RepoBase(SportsContext db)
+        public RepoBase(DbContext db)
         {
             this.Db = db;
         }
 
-        public SportsContext Context => this.Db;
-        protected DbSet<T> Table => this.Db.Set<T>();
+        public SportsContext Context => this.Db as SportsContext;
+        protected DbSet<TEntity> Table => this.Db.Set<TEntity>();
     }
 }
