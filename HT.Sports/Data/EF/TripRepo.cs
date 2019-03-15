@@ -10,15 +10,15 @@ namespace HT.Sports.Data.EF
 {
     public class TripRepo : RepoBase<Trip>, ITripRepo
     {
-        public TripRepo(SportsContext db) 
+        public TripRepo(SportsContext db)
             : base(db)
         {
         }
 
-        public async Task<int> AddAsync(Trip trip)
+        public async Task<Trip> AddAsync(Trip trip)
         {
-            this.Table.Add(trip);
-            return await this.Db.SaveChangesAsync();
+            var operation = new AddAsyncOperation<TripRepo, Trip>(this);
+            return await operation.AddAsync(trip);
         }
 
         public async Task<int> DeleteAsync(int id)
@@ -56,6 +56,11 @@ namespace HT.Sports.Data.EF
             }
 
             propertyCopyAction(dbTrip, trip);
+            return await this.Db.SaveChangesAsync();
+        }
+
+        public async Task<int> TestMethod()
+        {
             return await this.Db.SaveChangesAsync();
         }
     }
