@@ -2,8 +2,8 @@
 
 namespace HT.Sports.Data
 {
-    public interface IDeleteable<TKey>
+    public interface IDeletable<TKey>
     {
-        Task<int> DeleteAsync(TKey id);
+        Task<TKey> DeleteAsync(TKey id);
     }
 }
