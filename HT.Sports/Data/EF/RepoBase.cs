@@ -3,11 +3,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HT.Sports.Data.EF
 {
-    public abstract class RepoBase<TEntity> where TEntity : EntityBase
+    public abstract class RepoBase<TEntity, TKey> where TEntity : EntityBase<TKey>
     {
         protected readonly DbContext Db;
         
-        public RepoBase(DbContext db)
+        protected RepoBase(DbContext db)
         {
             this.Db = db;
         }
