@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using HT.Sports.Data;
 using HT.Sports.Data.EF;
 using HT.Sports.Entities;
@@ -26,6 +27,13 @@ namespace HT.Sports.Services
         public async Task<int> CreateAsync(Trip trip)
         {
             await this._tripRepo.AddAsync(trip);
+            return await this._context.SaveChangesAsync();
+        }
+
+        public async Task<int> UpdateAsync(int id, Action<Trip, Trip> propertyCopyAction)
+        {
+            var trip = await _tripRepo.GetByIdAsync(id);
+            await this._tripRepo.UpdateAsync(trip, propertyCopyAction);
             return await this._context.SaveChangesAsync();
         }
     }
