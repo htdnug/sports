@@ -3,8 +3,8 @@ using HT.Sports.Entities;
 
 namespace HT.Sports.Data.EF.Operations
 {
-    internal class AddAsyncOperation<TRepo, TEntity>
-       where TEntity : EntityBase
+    internal class AddAsyncOperation<TRepo, TEntity, TKey>
+       where TEntity : EntityBase<TKey>
        where TRepo : RepoBase<TEntity>, IReadableById<int, TEntity>
     {
         private readonly TRepo _repo;
