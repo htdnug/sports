@@ -5,7 +5,7 @@ namespace HT.Sports.Data.EF.Operations
 {
     internal class AddAsyncOperation<TRepo, TEntity, TKey>
        where TEntity : EntityBase<TKey>
-       where TRepo : RepoBase<TEntity>, IReadableById<int, TEntity>
+       where TRepo : RepoBase<TEntity, TKey>, IReadableById<int, TEntity>
     {
         private readonly TRepo _repo;
 

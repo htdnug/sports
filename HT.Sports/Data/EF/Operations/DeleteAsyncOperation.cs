@@ -5,7 +5,7 @@ namespace HT.Sports.Data.EF.Operations
 {
     internal class DeleteAsyncOperation<TRepo, TEntity, TKey>
         where TEntity : EntityBase<TKey>
-        where TRepo : RepoBase<TEntity>, IReadableById<TKey, TEntity>
+        where TRepo : RepoBase<TEntity, TKey>, IReadableById<TKey, TEntity>
         where TKey : struct
     {
         private readonly TRepo _repo;
