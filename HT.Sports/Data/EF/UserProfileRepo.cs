@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HT.Sports.Data.EF
 {
-    public class UserProfileRepo : RepoBase<UserProfile>, IUserProfileRepo
+    public class UserProfileRepo : RepoBase<UserProfile, int>, IUserProfileRepo
     {
         public UserProfileRepo(SportsContext db) 
             : base(db)
