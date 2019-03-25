@@ -8,8 +8,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace HT.Sports.Data.EF
 {
-    public class TripRepo : RepoBase<Trip>, ITripRepo
-    {
+    public class TripRepo : RepoBase<Trip, int>, ITripRepo
+    { 
         public TripRepo(SportsContext db)
             : base(db)
         {
@@ -17,13 +17,19 @@ namespace HT.Sports.Data.EF
 
         public async Task<Trip> AddAsync(Trip trip)
         {
-            var operation = new AddAsyncOperation<TripRepo, Trip>(this);
+            var operation = new AddAsyncOperation<TripRepo, Trip, int>(this);
             return await operation.AddAsync(trip);
+        }
+
+        public async Task<Trip> UpdateAsync(Trip trip, Action<Trip, Trip> propertyCopyAction)
+        {
+            var operation = new UpdateAsyncOperation<TripRepo, Trip, int>(this);
+            return await operation.UpdateAsync(trip, propertyCopyAction);
         }
 
         public async Task<int> DeleteAsync(int id)
         {
-            var operation = new DeleteAsyncOperation<TripRepo, Trip>(this);
+            var operation = new DeleteAsyncOperation<TripRepo, Trip, int>(this);
             return await operation.DeleteAsync(id);
         }
 
@@ -40,23 +46,6 @@ namespace HT.Sports.Data.EF
         public async Task<Trip> GetByIdAsync(int id)
         {
             return await this.Table.FindAsync(id);
-        }
-
-        public async Task<int> UpdateAsync(Trip trip, Action<Trip, Trip> propertyCopyAction)
-        {
-            if (trip.Id == 0)
-            {
-                return 0;
-            }
-
-            var dbTrip = await this.GetByIdAsync(trip.Id);
-            if (dbTrip == null)
-            {
-                return 0;
-            }
-
-            propertyCopyAction(dbTrip, trip);
-            return await this.Db.SaveChangesAsync();
         }
 
         public async Task<int> TestMethod()
