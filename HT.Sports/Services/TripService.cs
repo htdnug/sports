@@ -30,9 +30,8 @@ namespace HT.Sports.Services
             return await this._context.SaveChangesAsync();
         }
 
-        public async Task<int> UpdateAsync(int id, Action<Trip, Trip> propertyCopyAction)
+        public async Task<int> UpdateAsync(Trip trip, Action<Trip, Trip> propertyCopyAction)
         {
-            var trip = await _tripRepo.GetByIdAsync(id);
             await this._tripRepo.UpdateAsync(trip, propertyCopyAction);
             return await this._context.SaveChangesAsync();
         }

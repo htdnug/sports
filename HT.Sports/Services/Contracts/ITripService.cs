@@ -8,6 +8,6 @@ namespace HT.Sports.Services.Contracts
     {
         Task<int> DeleteAsync(int id);
         Task<int> CreateAsync(Trip trip);
-        Task<int> UpdateAsync(int id, Action<Trip, Trip> propertyCopyAction);
+        Task<int> UpdateAsync(Trip trip, Action<Trip, Trip> propertyCopyAction);
     }
 }
