@@ -16,13 +16,13 @@ namespace HT.Sports.Data.EF.Operations
 
         public async Task<int> DeleteAsync(TKey id)
         {
-            var entity = await _repo.GetByIdAsync(id);
-            if (entity == null)
+            var dbEntity = await _repo.GetByIdAsync(id);
+            if (dbEntity == null)
             {
                 return 0;
             }
 
-            _repo.Context.Set<TEntity>().Remove(entity);
+            _repo.Context.Set<TEntity>().Remove(dbEntity);
             return 1;
         }
     }

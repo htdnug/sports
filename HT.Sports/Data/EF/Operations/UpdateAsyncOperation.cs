@@ -25,14 +25,14 @@ namespace HT.Sports.Data.EF.Operations
                 return null; 
             }
 
-            var item = await _repo.GetByIdAsync(entity.Id);
-            if (item == null)
+            var dbEntity = await _repo.GetByIdAsync(entity.Id);
+            if (dbEntity == null)
             {
                 return null;
             }
 
-            propertyCopyAction(item, entity);
-            return _repo.Context.Set<TEntity>().Update(item).Entity;
+            propertyCopyAction(dbEntity, entity);
+            return _repo.Context.Set<TEntity>().Update(dbEntity).Entity;
 
         }
     }
