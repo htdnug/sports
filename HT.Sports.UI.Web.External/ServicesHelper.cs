@@ -1,5 +1,7 @@
 ﻿using HT.Sports.Data;
 using HT.Sports.Data.EF;
+using HT.Sports.Services;
+using HT.Sports.Services.Contracts;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace HT.Sports.UI.Web.External
@@ -39,6 +41,8 @@ namespace HT.Sports.UI.Web.External
             // setup custom services here
             services.AddScoped<ITripRepo, TripRepo>();
             services.AddScoped<IUserProfileRepo, UserProfileRepo>();
+
+            services.AddScoped<ITripService, TripService>();
         }
     }
 }

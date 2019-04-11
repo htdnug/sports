@@ -4,16 +4,19 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
 using HT.Sports.Data;
+using HT.Sports.Services.Contracts;
 
 namespace HT.Sports.UI.Web.External.Pages.Trips
 {
     public class DeleteModel : PageModel
     {
         private readonly ITripRepo _tripRepo;
+        private readonly ITripService _tripService;
 
-        public DeleteModel(ITripRepo tripRepo)
+        public DeleteModel(ITripRepo tripRepo, ITripService tripService)
         {
             this._tripRepo = tripRepo;
+            this._tripService = tripService;
         }
 
         [BindProperty]
@@ -51,7 +54,7 @@ namespace HT.Sports.UI.Web.External.Pages.Trips
                 return NotFound();
             }
 
-            await this._tripRepo.DeleteAsync(id.Value);
+            await this._tripService.DeleteAsync(id.Value);
             return RedirectToPage("./Index");
         }
     }

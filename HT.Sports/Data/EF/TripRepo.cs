@@ -2,39 +2,35 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using HT.Sports.Data.EF.Operations;
 using HT.Sports.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace HT.Sports.Data.EF
 {
-    public class TripRepo : RepoBase<Trip>, ITripRepo
-    {
-        public TripRepo(SportsContext db) 
+    public class TripRepo : RepoBase<Trip, int>, ITripRepo
+    { 
+        public TripRepo(SportsContext db)
             : base(db)
         {
         }
 
-        public async Task<int> AddAsync(Trip trip)
+        public async Task<Trip> AddAsync(Trip trip)
         {
-            this.Table.Add(trip);
-            return await this.Db.SaveChangesAsync();
+            var operation = new AddAsyncOperation<TripRepo, Trip, int>(this);
+            return await operation.AddAsync(trip);
+        }
+
+        public async Task<Trip> UpdateAsync(Trip trip, Action<Trip, Trip> propertyCopyAction)
+        {
+            var operation = new UpdateAsyncOperation<TripRepo, Trip, int>(this);
+            return await operation.UpdateAsync(trip, propertyCopyAction);
         }
 
         public async Task<int> DeleteAsync(int id)
         {
-            if (id == 0)
-            {
-                return 0;
-            }
-
-            var dbTrip = await this.GetByIdAsync(id);
-            if (dbTrip == null)
-            {
-                return 0;
-            }
-
-            this.Table.Remove(dbTrip);
-            return await this.Db.SaveChangesAsync();
+            var operation = new DeleteAsyncOperation<TripRepo, Trip, int>(this);
+            return await operation.DeleteAsync(id);
         }
 
         public async Task<bool> DuplicateExistsAsync(Trip trip)
@@ -52,20 +48,8 @@ namespace HT.Sports.Data.EF
             return await this.Table.FindAsync(id);
         }
 
-        public async Task<int> UpdateAsync(Trip trip, Action<Trip, Trip> propertyCopyAction)
+        public async Task<int> TestMethod()
         {
-            if (trip.Id == 0)
-            {
-                return 0;
-            }
-
-            var dbTrip = await this.GetByIdAsync(trip.Id);
-            if (dbTrip == null)
-            {
-                return 0;
-            }
-
-            propertyCopyAction(dbTrip, trip);
             return await this.Db.SaveChangesAsync();
         }
     }
