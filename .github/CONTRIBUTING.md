@@ -5,7 +5,7 @@ process easy and effective for everyone involved.
 
 ## Pull requests
 
-Please open all pull requests with a clear title and description against 'dev' branch.
+Please open all pull requests with a clear title and description against 'master' branch.
 
 Please adhere to the coding guidelines used throughout the project (indentation, accurate comments, etc.) 
 and any other requirements (such as test coverage).
