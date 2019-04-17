@@ -4,17 +4,17 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using HT.Sports.Entities;
 using System.ComponentModel.DataAnnotations;
-using HT.Sports.Data;
+using HT.Sports.Services.Contracts;
 
 namespace HT.Sports.UI.Web.External.Pages.Trips
 {
     public class CreateModel : PageModel
     {
-        private readonly ITripRepo _tripRepo;
+        private readonly ITripService _tripService;
 
-        public CreateModel(ITripRepo tripRepo)
+        public CreateModel(ITripService tripService)
         {
-            this._tripRepo = tripRepo;
+            this._tripService = tripService;
         }
 
         public IActionResult OnGet()
@@ -37,7 +37,7 @@ namespace HT.Sports.UI.Web.External.Pages.Trips
             }
 
             var trip = new Trip { DateOccurred = this.DateOccurred };
-            await this._tripRepo.AddAsync(trip);
+            await this._tripService.CreateAsync(trip);
 
             return this.RedirectToPage("./Index");
         }

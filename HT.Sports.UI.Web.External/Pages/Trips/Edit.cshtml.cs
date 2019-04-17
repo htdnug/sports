@@ -6,16 +6,19 @@ using Microsoft.EntityFrameworkCore;
 using HT.Sports.Entities;
 using System.ComponentModel.DataAnnotations;
 using HT.Sports.Data;
+using HT.Sports.Services.Contracts;
 
 namespace HT.Sports.UI.Web.External.Pages.Trips
 {
     public class EditModel : PageModel
     {
         private readonly ITripRepo _tripRepo;
+        private readonly ITripService _tripService;
 
-        public EditModel(ITripRepo tripRepo)
+        public EditModel(ITripRepo tripRepo, ITripService tripService)
         {
             this._tripRepo = tripRepo;
+            this._tripService = tripService;
         }
 
         [BindProperty]
@@ -61,7 +64,7 @@ namespace HT.Sports.UI.Web.External.Pages.Trips
 
             try
             {
-                await this._tripRepo.UpdateAsync(trip, (dbVersion, formVersion) => {
+                await this._tripService.UpdateAsync(trip, (dbVersion, formVersion) => {
                     dbVersion.DateOccurred = formVersion.DateOccurred;
                 });
             }
