@@ -42,6 +42,7 @@ namespace HT.Sports.Data.EF
         {
             return new UserProfile[]
             {
+                new UserProfile { Id = -1, DisplayName = "Unregistered User"}, 
                 new UserProfile { Id = 1, DisplayName = "User One" },
                 new UserProfile { Id = 2, DisplayName = "User Two" },
                 new UserProfile { Id = 3, DisplayName = "User Three" }
