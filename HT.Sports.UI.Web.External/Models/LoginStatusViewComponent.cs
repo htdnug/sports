@@ -10,16 +10,16 @@ namespace HT.Sports.UI.Web.External.Models
     [ViewComponent]
     public class LoginStatusViewComponent : SportsViewComponent
     {
-        private readonly IUserProfileRepo userProfileRepo;
+        private readonly IUserProfileRepo _userProfileRepo;
 
         public LoginStatusViewComponent(IUserProfileRepo userProfileRepository)
         {
-            this.userProfileRepo = userProfileRepository;
+            this._userProfileRepo = userProfileRepository;
         }
 
         public async Task<IViewComponentResult> InvokeAsync()
         {
-            var users = await this.userProfileRepo.GetAllAsync();
+            var users = await this._userProfileRepo.GetAllAsync();
             var vm = new LoginStatusViewModel
             {
                 UserProfiles = users.Select(x => new UserProfileViewModel { Id = x.Id, DisplayName = x.DisplayName })
