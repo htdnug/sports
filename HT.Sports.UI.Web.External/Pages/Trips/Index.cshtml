@@ -13,21 +13,43 @@
 <table class="table">
     <thead>
         <tr>
-            <th>Date</th>
-            <th></th>
+            <th>@Html.DisplayNameFor(model => model.TripDisplayNames.DateOccurred)</th>
+            <th>@Html.DisplayNameFor(model => model.TripDisplayNames.UserName)</th>
+            <th>@Html.DisplayNameFor(model => model.TripDisplayNames.TripType)</th>
+            <th>@Html.DisplayNameFor(model => model.TripDisplayNames.TripStartLatitude)</th>
+            <th>@Html.DisplayNameFor(model => model.TripDisplayNames.TripStartLongitude)</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Trips) {
+    @if (!Model.Trips.Any())
+    {
+        <tr>
+            <td colspan="6">No trips have been created.</td>
+        </tr>
+    }
+    @foreach (var item in Model.Trips)
+    {
         <tr>
             <td>
                 @Html.DisplayFor(modelItem => item.DateOccurred)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.UserName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TripType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TripStartLatitude)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TripStartLongitude)
             </td>
             <td>
                 <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
                 <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
-}
+    }
     </tbody>
 </table>
