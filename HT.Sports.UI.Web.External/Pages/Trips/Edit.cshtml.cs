@@ -1,12 +1,11 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using HT.Sports.Data;
+using HT.Sports.Entities;
+using HT.Sports.Services.Contracts;
+using HT.Sports.UI.Web.External.ViewModels.Pages.Trips;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
-using HT.Sports.Entities;
-using System.ComponentModel.DataAnnotations;
-using HT.Sports.Data;
-using HT.Sports.Services.Contracts;
 
 namespace HT.Sports.UI.Web.External.Pages.Trips
 {
@@ -22,14 +21,7 @@ namespace HT.Sports.UI.Web.External.Pages.Trips
         }
 
         [BindProperty]
-        public int Id { get; set; }
-
-        [BindProperty]
-        [Display(Name = "Date")]
-        [DisplayFormat(DataFormatString = "{0:d}")]
-        [DataType(DataType.Date)]
-        [Required]
-        public DateTime DateOccurred { get; set; }
+        public TripEditViewModel Trip { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -38,14 +30,20 @@ namespace HT.Sports.UI.Web.External.Pages.Trips
                 return this.NotFound();
             }
 
-            var trip = await this._tripRepo.GetByIdAsync(id.Value);
+            var trip = await this._tripService.GetByIdAsync(id.Value);
             if (trip == null)
             {
                 return this.NotFound();
             }
 
-            this.Id = trip.Id;
-            this.DateOccurred = trip.DateOccurred;
+            Trip = new TripEditViewModel()
+            {
+                Id = trip.Id,
+                TripStartLatitude = trip.TripStartLatitude,
+                TripStartLongitude = trip.TripStartLongitude,
+                TripType = trip.TripType,
+                DateOccurred = trip.DateOccurred
+            };
             return this.Page();
         }
 
@@ -56,21 +54,29 @@ namespace HT.Sports.UI.Web.External.Pages.Trips
                 return this.Page();
             }
 
-            var trip = new Trip
+            var dbTrip = await this._tripService.GetByIdAsync(Trip.Id);
+
+            var formTrip = new Trip
             {
-                Id = this.Id,
-                DateOccurred = this.DateOccurred
+                TripType = Trip.TripType,
+                TripStartLatitude = Trip.TripStartLatitude,
+                TripStartLongitude = Trip.TripStartLongitude,
+                DateOccurred = Trip.DateOccurred
             };
 
             try
             {
-                await this._tripService.UpdateAsync(trip, (dbVersion, formVersion) => {
-                    dbVersion.DateOccurred = formVersion.DateOccurred;
+                await this._tripService.UpdateAsync(dbTrip, (dbVersion, formVersion) =>
+                {                  
+                    dbTrip.TripType = formTrip.TripType;
+                    dbTrip.TripStartLatitude = formTrip.TripStartLatitude;
+                    dbTrip.TripStartLongitude = formTrip.TripStartLongitude;
+                    dbTrip.DateOccurred = formTrip.DateOccurred;
                 });
             }
             catch (DbUpdateConcurrencyException)
             {
-                var duplicateExists = await this._tripRepo.DuplicateExistsAsync(trip);
+                var duplicateExists = await this._tripRepo.DuplicateExistsAsync(formTrip);
                 if (!duplicateExists)
                 {
                     return this.NotFound();
