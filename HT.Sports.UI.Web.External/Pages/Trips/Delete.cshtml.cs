@@ -5,29 +5,21 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.ComponentModel.DataAnnotations;
 using HT.Sports.Data;
 using HT.Sports.Services.Contracts;
+using HT.Sports.UI.Web.External.ViewModels.Pages.Trips;
 
 namespace HT.Sports.UI.Web.External.Pages.Trips
 {
     public class DeleteModel : PageModel
     {
-        private readonly ITripRepo _tripRepo;
         private readonly ITripService _tripService;
 
         public DeleteModel(ITripRepo tripRepo, ITripService tripService)
         {
-            this._tripRepo = tripRepo;
             this._tripService = tripService;
         }
 
-        [BindProperty]
-        public int Id { get; set; }
-
-        [BindProperty]
-        [Display(Name = "Date")]
-        [DisplayFormat(DataFormatString = "{0:d}")]
-        [DataType(DataType.Date)]
-        [Required]
-        public DateTime DateOccurred { get; set; }
+       [BindProperty]
+       public TripDeleteViewModel Trip { get; set; }
 
         public async Task<IActionResult> OnGetAsync(int? id)
         {
@@ -36,14 +28,22 @@ namespace HT.Sports.UI.Web.External.Pages.Trips
                 return this.NotFound();
             }
 
-            var trip = await this._tripRepo.GetByIdAsync(id.Value);
+            var trip = await this._tripService.GetByIdAndUserProfileAsync(id.Value);
             if (trip == null)
             {
                 return this.NotFound();
             }
 
-            this.Id = trip.Id;
-            this.DateOccurred = trip.DateOccurred;
+            Trip = new TripDeleteViewModel()
+            {
+                Id = trip.Id,
+                TripType = trip.TripType,
+                TripStartLatitude = trip.TripStartLatitude,
+                TripStartLongitude = trip.TripStartLongitude,
+                DateOccurred = trip.DateOccurred,
+                UserName = trip.UserProfile.DisplayName
+            };
+
             return this.Page();
         }
 

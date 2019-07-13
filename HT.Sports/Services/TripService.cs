@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using HT.Sports.Data;
 using HT.Sports.Data.EF;
@@ -34,6 +36,26 @@ namespace HT.Sports.Services
         {
             await this._tripRepo.UpdateAsync(trip, propertyCopyAction);
             return await this._context.SaveChangesAsync();
+        }
+
+        public async Task<Trip> GetByIdAsync(int id)
+        {
+            return await this._tripRepo.GetByIdAsync(id);
+        }
+
+        public async Task<Trip> GetByIdAndUserProfileAsync(int id)
+        {
+            return await this._tripRepo.GetByIdAndUserProfileAsync(id);
+        }
+
+        public async Task<List<Trip>> GetAllAsync()
+        {
+           return await this._tripRepo.GetAllAsync();
+        }
+
+        public async Task<List<Trip>> GetAllAndRelatedUserProfileAsync()
+        {
+            return await this._tripRepo.GetAllAndRelatedUserProfileAsync();
         }
     }
 }

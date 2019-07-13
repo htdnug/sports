@@ -5,11 +5,12 @@ using System.Threading.Tasks;
 using HT.Sports.Data.EF.Operations;
 using HT.Sports.Entities;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query.ExpressionVisitors.Internal;
 
 namespace HT.Sports.Data.EF
 {
     public class TripRepo : RepoBase<Trip, int>, ITripRepo
-    { 
+    {
         public TripRepo(SportsContext db)
             : base(db)
         {
@@ -43,9 +44,20 @@ namespace HT.Sports.Data.EF
             return await this.Table.AsNoTracking().OrderByDescending(x => x.DateOccurred).ToListAsync();
         }
 
+        public async Task<List<Trip>> GetAllAndRelatedUserProfileAsync()
+        {
+            return await this.Table.AsNoTracking().OrderByDescending(x => x.DateOccurred).Include(x => x.UserProfile)
+                .ToListAsync();
+        }
         public async Task<Trip> GetByIdAsync(int id)
         {
-            return await this.Table.FindAsync(id);
+            var operation = new GetByIdAsyncOperation<TripRepo, Trip, int>(this);
+            return await operation.GetByIdAsync(id);
+        }
+
+        public async Task<Trip> GetByIdAndUserProfileAsync(int id)
+        {
+            return await this.Table.Include(x => x.UserProfile).FirstOrDefaultAsync(x => x.Id == id);
         }
 
         public async Task<int> TestMethod()
